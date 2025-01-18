@@ -106,9 +106,27 @@ class HomePage extends StatelessWidget {
                   ),
                   TextField(
                     decoration: InputDecoration(
-                      labelText: 'Título',
+                      labelText: 'Valor (R\$)',
                     ),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 15),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  WidgetStatePropertyAll(Colors.blue)),
+                          child: Text(
+                            'Nova Transação',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
