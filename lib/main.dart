@@ -1,3 +1,4 @@
+import 'package:expenses/components/transaction_form.dart';
 import 'package:expenses/components/transaction_list.dart';
 import 'package:expenses/models/transaction.dart';
 import 'package:flutter/material.dart';
@@ -48,44 +49,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
           TransactionList(_transactions),
-          Card(
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Título',
-                    ),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Valor (R\$)',
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 15),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  WidgetStatePropertyAll(Colors.blue)),
-                          child: Text(
-                            'Nova Transação',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          onPressed: () {},
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          )
+          TransactionForm(),
         ],
       ),
     );
