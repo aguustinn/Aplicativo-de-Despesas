@@ -43,7 +43,12 @@ class HomePageState extends State<HomePage> {
       value: value,
       date: DateTime.now(),
     );
-}
+
+    setState(() {
+      transactions.add(newTransaction);
+    });
+  }
+
   opentransactionFormModal(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -51,7 +56,7 @@ class HomePageState extends State<HomePage> {
           return TransactionForm(_addTransaction);
         });
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
