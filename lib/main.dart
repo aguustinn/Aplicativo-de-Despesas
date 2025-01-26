@@ -15,6 +15,7 @@ class AppDespesa extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: HomePage(),
       theme: ThemeData(
         fontFamily: 'Montserrat',
@@ -40,19 +41,19 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Novo Tênis de Corrida',
-      value: 310.76,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 211.3,
-      date: DateTime.now(),
-    ),
+  final List<Transaction> transactions = [
+    //  Transaction(
+    //     id: 't1',
+    //     title: 'Novo Tênis de Corrida',
+    //     value: 310.76,
+    //     date: DateTime.now(),
+    //   ),
+    //   Transaction(
+    //     id: 't2',
+    //     title: 'Conta de Luz',
+    //     value: 211.3,
+    //     date: DateTime.now(),
+    //   ),
   ];
 
   _addTransaction(String tittle, double value) {
