@@ -9,13 +9,32 @@ main() {
 }
 
 class AppDespesa extends StatelessWidget {
+  AppDespesa({super.key});
+  final ThemeData tema = ThemeData();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage());
+    return MaterialApp(
+      home: HomePage(),
+      theme: ThemeData(
+        fontFamily: 'Montserrat',
+        useMaterial3: false,
+        appBarTheme: AppBarTheme(
+          backgroundColor: const Color.fromARGB(255, 58, 2, 137),
+          foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+        ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 58, 2, 137),
+          primary: const Color.fromARGB(255, 255, 255, 255),
+          secondary: const Color.fromARGB(255, 0, 0, 0),
+        ),
+      ),
+    );
   }
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
   @override
   State<HomePage> createState() => HomePageState();
 }
@@ -47,6 +66,8 @@ class HomePageState extends State<HomePage> {
     setState(() {
       transactions.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
   }
 
   opentransactionFormModal(BuildContext context) {
@@ -56,13 +77,15 @@ class HomePageState extends State<HomePage> {
           return TransactionForm(_addTransaction);
         });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Despesas Pessoais'),
-        backgroundColor: Colors.blue,
+        title: Text(
+          'Despesas Pessoais',
+          style: TextStyle(fontFamily: 'PlaywriteIN'),
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -77,7 +100,6 @@ class HomePageState extends State<HomePage> {
             Container(
               width: double.infinity,
               child: Card(
-                color: Colors.blue,
                 elevation: 5,
                 child: Center(child: Text('Gráfico')),
               ),
