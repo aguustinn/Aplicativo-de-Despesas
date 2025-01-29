@@ -20,7 +20,7 @@ class _TransactionFormState extends State<TransactionForm> {
     if (title.isEmpty || value <= 0) {
       return;
     }
-    
+
     widget.onSubmit(title, value);
   }
 
@@ -47,8 +47,28 @@ class _TransactionFormState extends State<TransactionForm> {
                 labelText: 'Valor (R\$)',
               ),
             ),
+            Container(
+              height: 70,
+              child: Row(
+                children: [
+                  Text(
+                    'Nenhum data selecionada!',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Selecionar Data',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
                   margin: EdgeInsets.only(top: 15),
