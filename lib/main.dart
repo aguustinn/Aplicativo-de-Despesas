@@ -22,13 +22,12 @@ class AppDespesa extends StatelessWidget {
         fontFamily: 'Montserrat',
         useMaterial3: false,
         appBarTheme: AppBarTheme(
-          backgroundColor: const Color.fromARGB(255, 58, 2, 137),
-          foregroundColor: const Color.fromARGB(255, 255, 255, 255),
-        ),
+            backgroundColor: const Color.fromARGB(255, 58, 2, 137),
+            foregroundColor: const Color.fromARGB(255, 255, 255, 255)),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 58, 2, 137),
-          primary: const Color.fromARGB(255, 255, 255, 255),
-          secondary: const Color.fromARGB(255, 0, 0, 0),
+          seedColor: const Color.fromARGB(255, 106, 0, 255),
+          primary: const Color.fromARGB(255, 0, 21, 255),
+          secondary: Color.fromARGB(255, 251, 255, 0),
         ),
       ),
     );
@@ -42,38 +41,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't0',
-      title: 'Conta Antiga',
-      value: 400.00,
-      date: DateTime.now().subtract(Duration(days: 33)),
-    ),
-    Transaction(
-      id: 't1',
-      title: 'Novo Tênis de Corrida',
-      value: 310.76,
-      date: DateTime.now().subtract(Duration(days: 4)),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 211.3,
-      date: DateTime.now().subtract(Duration(days: 4)),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'Cartão de Crédito',
-      value: 10021.30,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't4',
-      title: 'Lanche',
-      value: 11.3,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transaction> transactions = [];
 
   List<Transaction> get recentTransactions {
     return transactions.where((tr) {
@@ -83,12 +51,12 @@ class HomePageState extends State<HomePage> {
     }).toList();
   }
 
-  _addTransaction(String tittle, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
-      title: tittle,
+      title: title,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
@@ -96,6 +64,12 @@ class HomePageState extends State<HomePage> {
     });
 
     Navigator.of(context).pop();
+  }
+
+  removeTransaction(String id) {
+    setState(() {
+      transactions.removeWhere((tr) => tr.id == id);
+    });
   }
 
   opentransactionFormModal(BuildContext context) {
@@ -126,7 +100,7 @@ class HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(recentTransactions),
-            TransactionList(transactions),
+            TransactionList(transactions, removeTransaction),
           ],
         ),
       ),
