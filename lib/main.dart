@@ -22,13 +22,12 @@ class AppDespesa extends StatelessWidget {
         fontFamily: 'Montserrat',
         useMaterial3: false,
         appBarTheme: AppBarTheme(
-          backgroundColor: const Color.fromARGB(255, 58, 2, 137),
-          foregroundColor: const Color.fromARGB(255, 255, 255, 255),
-        ),
+            backgroundColor: const Color.fromARGB(255, 58, 2, 137),
+            foregroundColor: const Color.fromARGB(255, 255, 255, 255)),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 58, 2, 137),
-          primary: const Color.fromARGB(255, 255, 255, 255),
-          secondary: const Color.fromARGB(255, 0, 0, 0),
+          seedColor: const Color.fromARGB(255, 106, 0, 255),
+          primary: const Color.fromARGB(255, 0, 21, 255),
+          secondary: Color.fromARGB(255, 251, 255, 0),
         ),
       ),
     );
@@ -42,26 +41,8 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't0',
-      title: 'Conta Antiga',
-      value: 400.00,
-      date: DateTime.now().subtract(Duration(days: 33)),
-    ),
-    Transaction(
-      id: 't1',
-      title: 'Novo Tênis de Corrida',
-      value: 310.76,
-      date: DateTime.now().subtract(Duration(days: 4)),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 211.3,
-      date: DateTime.now().subtract(Duration(days: 4)),
-    ),
-  ];
+  final List<Transaction> transactions = [];
+  bool _showChart = false;
 
   List<Transaction> get recentTransactions {
     return transactions.where((tr) {
@@ -71,12 +52,12 @@ class HomePageState extends State<HomePage> {
     }).toList();
   }
 
-  _addTransaction(String tittle, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
-      title: tittle,
+      title: title,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
@@ -84,6 +65,12 @@ class HomePageState extends State<HomePage> {
     });
 
     Navigator.of(context).pop();
+  }
+
+  removeTransaction(String id) {
+    setState(() {
+      transactions.removeWhere((tr) => tr.id == id);
+    });
   }
 
   opentransactionFormModal(BuildContext context) {
@@ -96,25 +83,50 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Despesas Pessoais',
-          style: TextStyle(fontFamily: 'PlaywriteIN'),
+    bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    final appBar = AppBar(
+      title: Text(
+        'Despesas Pessoais',
+        style: TextStyle(
+          fontFamily: 'PlaywriteIN',
+          fontSize: 20 * MediaQuery.of(context).textScaler.scale(1),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => opentransactionFormModal(context),
-          ),
-        ],
       ),
+      actions: [
+        if (isLandscape)
+          IconButton(
+              icon: Icon(_showChart ? Icons.list : Icons.add_chart),
+              onPressed: () {
+                setState(() {
+                  _showChart = !_showChart;
+                });
+              }),
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => opentransactionFormModal(context),
+        ),
+      ],
+    );
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(recentTransactions),
-            TransactionList(transactions),
+            if (_showChart || !isLandscape)
+              Container(
+                  height: availableHeight * (isLandscape ? 0.70 : 0.3),
+                  child: Chart(recentTransactions)),
+            if (!_showChart || !isLandscape)
+              Container(
+                height: availableHeight * 0.70,
+                child: TransactionList(transactions, removeTransaction),
+              ),
           ],
         ),
       ),
