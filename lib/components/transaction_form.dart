@@ -53,7 +53,7 @@ class _TransactionFormState extends State<TransactionForm> {
             TextField(
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).secondaryHeaderColor),
+                  color: Theme.of(context).primaryColor),
               controller: _titleController,
               onSubmitted: (_) => submitForm(),
               decoration: InputDecoration(
