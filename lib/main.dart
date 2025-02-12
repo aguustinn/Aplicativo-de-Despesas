@@ -120,11 +120,11 @@ class HomePageState extends State<HomePage> {
           children: <Widget>[
             if (_showChart || !isLandscape)
               Container(
-                  height: availableHeight * (isLandscape ? 0.70 : 0.3),
+                  height: availableHeight * (isLandscape ? 0.8 : 0.3),
                   child: Chart(recentTransactions)),
             if (!_showChart || !isLandscape)
               Container(
-                height: availableHeight * 0.70,
+                height: availableHeight * (isLandscape ? 1 : 0.7),
                 child: TransactionList(transactions, removeTransaction),
               ),
           ],
